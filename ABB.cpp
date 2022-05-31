@@ -229,19 +229,20 @@ void menu(){
 	char sino;
 
 	do{
-		cout<<"------------------------------------------\n";
-		cout<<" 0. Agregar Elementos Predeterminados.\n";
-		cout<<" 1. Agregar elementos al arbol. \n";
-		cout<<" 2. Mostrar Arbol.\n";
-		cout<<" 3. Buscar en Arbol.\n";
-		cout<<" 4. Mostrar por PreOrden, InOrden y Post.\n";
-		cout<<" 5. Mostrar de Menor a Mayor.\n";
-		cout<<" 6. Mostrar de Mayor a Menor.\n";
-		cout<<" 7. Mostrar el Menor.\n";
-		cout<<" 8. Mostrar el Mayor.\n";
-		cout<<" 9. Mostrar el Nivel del Arbol.\n";
-		cout<<" 10. Mostrar el Promedio.\n";
-		cout<<" 20. Salir.\n";
+		cout<<"**********************************************\n";
+		cout<<"| 0. Agregar Elementos Predeterminados       |\n";
+		cout<<"| 1. Agregar elementos al arbol.             |\n";
+		cout<<"| 2. Mostrar Arbol                           |\n";
+		cout<<"| 3. Buscar en Arbol                         |\n";
+		cout<<"| 4. Mostrar por PreOrden, InOrden y Post    |\n";
+		cout<<"| 5. Mostrar de Menor a Mayor                |\n";
+		cout<<"| 6. Mostrar de Mayor a Menor                |\n";
+		cout<<"| 7. Mostrar el Menor                        |\n";
+		cout<<"| 8. Mostrar el Mayor                        |\n";
+		cout<<"| 9. Mostrar el Nivel del Arbol              |\n";
+		cout<<"| 10. Mostrar el Promedio                    |\n";
+		cout<<"| 20. Salir                                  |\n";
+        cout<<"**********************************************\n";
 		cout<<"\nOpcion: ";
 		cin>>opcion;
 
