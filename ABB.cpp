@@ -2,7 +2,23 @@
 #include<conio.h>
 #include<stdlib.h>
 #include<string>
-
+/*
+Jóvenes Buenos días, para hoy la siguiente practica:
+1. Según el número de orden de la lista de estudiantes resolver el ejercicio que se les indica a continuación.
+Nro de             Trabajo a Desarrollar
+Orden
+1-3                   Al recorrer el árbol cuantas llanadas recursivas
+////////////////////////////////4-6                   Encontrar el nivel del árbol
+////////////////////////////////7-9                   Encontrar el mayor elemento
+////////////////////////////////10-12               Encontrar el menor elemento
+////////////////////////////////13-15               Sumar y Hallar el Promedio
+////////////////////////////////16-18               Mostrar de mayor a menor
+////////////////////////////////19-21               Mostrar de menor a mayor
+22-24               Al recorrer el árbol cuantas paradas hay
+////////////////////////////////Nota: No utilice variables globales, utilice recursividad////////////////////////////////
+2. Además del ejercicio anterior, si le alcanza tiempo resuelva un ejercicio más que no se le asigno de la lista
+Subir su practica en el trabajo con el mismo nombre del foro en el sistema hasta las 11:00am
+*/
 using namespace std;
 
 struct Nodo{
@@ -109,6 +125,46 @@ void postOrden(Nodo *arbol){//si esta vacio, retornamos el caso base
 		cout<<arbol->dato<<" - ";//recorremos la raiz
 	}
 }
+//MEno a mayor
+void menorAmayor(Nodo *arbol){
+	if(arbol == NULL){
+		return;
+	}else{
+		menorAmayor(arbol->izq);
+		cout<<arbol->dato<<" - ";
+		menorAmayor(arbol->der);
+	}
+}
+
+// mayor a menor
+void mayorAmenor(Nodo *arbol){
+	if(arbol == NULL){
+		return;
+	}else{
+		mayorAmenor(arbol->der);
+		cout<<arbol->dato<<" - ";
+		mayorAmenor(arbol->izq);
+	}
+}
+// Llamadas recursivas
+int llarec(Nodo *arbol,int menor,int rec){
+	if(arbol == NULL){
+		return rec;
+	}else if(arbol->dato < menor){
+		menor = arbol->dato;
+		return llarec(arbol->izq,menor,rec+1);
+	}
+}
+// Llamadas parada
+int nroparada(Nodo *arbol,int menor,int parada){
+	if(arbol == NULL){
+		parada ++;
+		return parada;
+	}else if(arbol->dato < menor){
+		menor = arbol->dato;
+		return nroparada(arbol->izq,menor,parada);
+	}
+}
 
 //Funcion que muestra el elemento menor del arbol
 int MenorArbol(Nodo *arbol,int menor){
@@ -173,18 +229,19 @@ void menu(){
 	char sino;
 
 	do{
-		cout<<" 0. Agregar Elementos Predeterminados."<<endl;
-		cout<<" 1. Agregar elementos al arbol. "<<endl;
-		cout<<" 2. Mostrar Arbol."<<endl;
-		cout<<" 3. Buscar en Arbol."<<endl;
-		cout<<" 4. Mostrar por PreOrden."<<endl;
-		cout<<" 5. Mostrar por InOrden."<<endl;
-		cout<<" 6. Mostrar por PostOrden."<<endl;
-		cout<<" 7. Mostrar el Menor."<<endl;
-		cout<<" 8. Mostrar el Mayor."<<endl;
-		cout<<" 9. Mostrar el Nivel del Arbol."<<endl;
-		cout<<" 10. Mostrar el Promedio"<<endl;
-		cout<<" 20. Salir."<<endl;
+		cout<<"------------------------------------------\n";
+		cout<<" 0. Agregar Elementos Predeterminados.\n";
+		cout<<" 1. Agregar elementos al arbol. \n";
+		cout<<" 2. Mostrar Arbol.\n";
+		cout<<" 3. Buscar en Arbol.\n";
+		cout<<" 4. Mostrar por PreOrden, InOrden y Post.\n";
+		cout<<" 5. Mostrar de Menor a Mayor.\n";
+		cout<<" 6. Mostrar de Mayor a Menor.\n";
+		cout<<" 7. Mostrar el Menor.\n";
+		cout<<" 8. Mostrar el Mayor.\n";
+		cout<<" 9. Mostrar el Nivel del Arbol.\n";
+		cout<<" 10. Mostrar el Promedio.\n";
+		cout<<" 20. Salir.\n";
 		cout<<"\nOpcion: ";
 		cin>>opcion;
 
@@ -197,13 +254,6 @@ void menu(){
 						}
 						cout<<"Succesfull!\n";
 					}
-					if(sino == 'N' || sino == 'n'){
-						break;
-					}
-					else{
-						cout<<"Ingreso una opcion equivocada :V";
-						break;
-						}
 					break;
 			case 1:	cout<<"Numero a agregar: ";
 					cin>>dato;
@@ -213,7 +263,7 @@ void menu(){
 						cout<< "El arbol esta vacio\n";
 					}else{
 						cout<< "Mostrando el Arbol\n";
-						mostrarArbol(arbol,0);
+						mostrarArbol(arbol,contador);
 					}					
 					break;
 			case 3: cout<<"\nNumero a Buscar: ";
@@ -224,42 +274,40 @@ void menu(){
 						cout<<"El elemento '"<<dato<<"' NO fue encontrado.";
 					}
 					break;
-			case 4: cout<<"\nRecorrido en PreOrden: ";
-					preOrden(arbol);
+			case 4: cout<<"\nRecorrido en InOrden: ";
+					inOrden(arbol);	
+					cout<<"\n";
+					cout<<"\nRecorrido en Preorden: ";
+					preOrden(arbol);	
+					cout<<"\n";
+					cout<<"\nRecorrido en PostOrden: ";
+					postOrden(arbol);	
 					cout<<"\n";
 					break;
-			case 5: cout<<"\nRecorrido en InOrden: ";
-					inOrden(arbol);
+			case 5: cout<<endl<<"Mostrando de menor a mayor: ";
+					menorAmayor(arbol);
 					cout<<"\n";
 					break;
-			case 6: cout<<"\nRecorrido en InOrden: ";
-					postOrden(arbol);
+			case 6: cout<<"\nMostrando de mayoy a menor: ";
+					mayorAmenor(arbol);
 					cout<<"\n";
 					break;
         	case 7: cout<<endl<<"El Menor Elemento del arbol es: "<<MenorArbol(arbol,999)<<endl;
 					break;
 			case 8: cout<<endl<<"El Mayor Elemento del arbol es: "<<MayorArbol(arbol,0)<<endl;
 					break;
-			case 9: cout<<endl<<"El arbol tiene "<<Nivel(arbol)<<endl;
+			case 9: cout<<endl<<"El arbol tiene "<<Nivel(arbol)<<" niveles"<<endl;
 					break;
-			case 10: double suma_arbol = sumar(arbol);
-					double Nro_elementos = nro_nodos(arbol);
+			case 10: float suma_arbol = sumar(arbol);
+					float Nro_elementos = nro_nodos(arbol);
 					float promedio = suma_arbol / Nro_elementos;
 					cout<<endl<<"El promedio de elementos del arbol es: "<<promedio<<endl;
 					cout<<"Dese mas detalles? Y/N: \n";
-					cin>>sino;
+					cin>>sino;		
 					if(sino == 'Y' || sino == 'y'){
 						cout<<"La suma es: "<<suma_arbol<<endl;;
 						cout<<"El Numero de Nodos es: "<<Nro_elementos<<endl<<endl;
 					}
-					if(sino == 'N' || sino == 'n'){
-						break;
-					}
-					else{
-						cout<<"Ingreso una opcion equivocada :V";
-						break;
-					}
-					
 					break;
 		}
 		system("pause");
@@ -269,6 +317,19 @@ void menu(){
 
 int main(){
 	menu();
+	/*
+		
+	int a,b;
+	//paradas
+	a = nroparada(arbol,999,0);
+	cout<<a;
+				
+	//recursivas
+	b=llarec(arbol,0,0)	
+	cout<<b;
+	
+	*/
+	
 	return 0;
 	getch();
 }
