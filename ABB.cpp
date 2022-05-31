@@ -242,7 +242,7 @@ void menu(){
 		cout<<"| 9. Mostrar el Nivel del Arbol              |\n";
 		cout<<"| 10. Mostrar el Promedio                    |\n";
 		cout<<"| 20. Salir                                  |\n";
-        cout<<"**********************************************\n";
+        	cout<<"**********************************************\n";
 		cout<<"\nOpcion: ";
 		cin>>opcion;
 
