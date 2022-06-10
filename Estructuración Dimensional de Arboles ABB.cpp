@@ -122,7 +122,7 @@ void mostrar_buscar(Nodo *arbol, int n){
 	}else if(arbol->codigo == n){
 		cout<<" Alumno Encontrado"<<endl;
         cout<<"  -Codigo: "<<arbol->codigo<<endl;
-        cout<<"  -Nombre: "<<arbol->nombre1<<endl;
+        cout<<"  -Nombre: "<<arbol->nombre<<endl;
         cout<<"  -Nota 1: "<<arbol->nota1<<endl;
         cout<<"  -Nota 2: "<<arbol->nota2<<endl;
 		return;
@@ -230,7 +230,10 @@ float nota2[] = {11.5,12.65,16,17,8,17.5};
 		cout<<"| 2. Mostrar Nodos       |\n";
 		cout<<"| 3. Buscar Nodo         |\n";
 		cout<<"| 4. Mostrar Estudiantes |\n";
-		cout<<"| 5. Mostrar Estudiantes |\n";
+		cout<<"| 5. Promedio Individual |\n";
+		cout<<"| 6. Nro de Aprobados y  |\n";
+		cout<<"|    Desaprobados        |\n";
+		cout<<"| 7. Promedio General    |\n";
 		cout<<"| 10. Salir              |\n";
         cout<<" ************************\n";
 		cout<<"\nOpcion: ";
