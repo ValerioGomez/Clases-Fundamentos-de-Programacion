@@ -50,6 +50,26 @@ Incluir opciones en el menú que calculen:
 #include<stdlib.h>
 #include<string>
 
+/* #define ARRIBA 'i'
+#define ABAJO 'k'
+#define ENTER 13 */
+
+/* int getch(void)
+{
+   int car;
+   DWORD leidos, modo;
+ 
+   GetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), &modo);   
+   SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), modo & !ENABLE_ECHO_INPUT & !ENABLE_PROCESSED_INPUT);
+   ReadConsole(GetStdHandle(STD_INPUT_HANDLE), &car, 1, &leidos, NULL);
+   SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), modo);   
+   return car;   
+} 
+int gotoxy(USHORT x,USHORT y) {
+   COORD cp = {x,y};
+   SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cp);
+ }*/
+
 using namespace std;
 
 struct Nodo{
@@ -218,6 +238,7 @@ void eliminar(Nodo *arbol,int n){
 //menu
 void menu(){
 	int codigo, opcion,opcion2, contador = 0;
+	float promedio,promedio_general;
 	char sino;
 
 string nombre[] = {"JUAN","LUIS","MILENA","PABLO","PEPE","ALBERTO"};
@@ -282,6 +303,43 @@ float nota2[] = {11.5,12.65,16,17,8,17.5};
             case 4: cout<<"Detalle de Estudiantes\n\n";
 					mostrar_estudiantes(arbol,5);					
 					break;
+			case 5: 
+					cout<<"Seleccione Codigo del alumno a Promediar: ";
+					cin>>promedio;
+/* 					void menu_principal()
+						{
+						bool repite = true;
+						int opcion;
+
+						// Título y las opciones del menú
+						const char *titulo = "Seleccione alumno";
+						const char *opciones[] = {"JUAN","LUIS","MILENA","PABLO","PEPE","ALBERTO"};
+						int n = 5; // Número de opciones
+
+						do {
+							opcion = menu(titulo, opciones, n);
+							switch (opcion) {
+								case 1:
+									JUAN();
+									break;
+								case 2:
+									LUIS();
+									break;
+								case 3:
+									MILENA();
+									break;
+								case 4:
+									PABLO();
+									break;
+								case 5:PEPE();
+									break;
+								case 5:ALBERTO();
+									break;
+							}
+						} while (repite);
+						} */
+					
+			case 6: cout<<"El Promedio General del Aula es: ";
 		}
 		system("pause");
 		system("cls");
