@@ -58,8 +58,7 @@ void mostrar_buscar(Nodo *arbol, int n){
 	if (arbol == NULL){
 		cout << ".-NO se encontro al Alumno-." << endl;
 		return;
-	}
-	else if (arbol->codigo == n){
+	}else if (arbol->codigo == n){
 		cout << " Alumno Encontrado" << endl;
 		cout << "  -Codigo: " << arbol->codigo << endl;
 		cout << "  -Nombre: " << arbol->nombre << endl;
@@ -72,18 +71,17 @@ void mostrar_buscar(Nodo *arbol, int n){
 		mostrar_buscar(arbol->der, n);
 	}
 }
-
-void mostrar_estudiantes(Nodo *arbol, int n,int i){
+void mostrar_estudiantes(Nodo *arbol, int n){
 	if (arbol == NULL){
 		return;
 	}else {
-		cout <<i+1<< "º Estudiante"<< ":" << endl;
+		cout << "*Estudiante"<< ":" << endl;
 		cout << "  -Codigo: " << arbol->codigo << endl;
 		cout << "  -Nombre: " << arbol->nombre << endl;
 		cout << "  -Nota 1: " << arbol->nota1 << endl;
 		cout << "  -Nota 2: " << arbol->nota2 << endl<< endl;
-		mostrar_estudiantes(arbol->der, n,i+1);
-		mostrar_estudiantes(arbol->izq,n,i+1);
+		mostrar_estudiantes(arbol->izq,n);
+		mostrar_estudiantes(arbol->der, n);
 	}
 }
 float promedio_alumno(Nodo *arbol, int codi){
@@ -113,6 +111,17 @@ float promedio_alumno(Nodo *arbol, int codi){
 		return  nota1 + nota2 + subarbolizq + subarbolder;
 	}
 } */
+bool buscar(Nodo *arbol, int bus){
+	if (arbol == NULL){
+		return false;
+	}else if (arbol->codigo == bus){
+		return true;
+	}else if (bus < arbol->codigo){
+		buscar(arbol->izq, bus);
+	}else{
+		buscar(arbol->der, bus);
+	}
+}
 
 float suma_nota1(Nodo *arbol){
 	if (arbol == NULL){
@@ -221,6 +230,7 @@ float aprobado(float n,float m){
 		return 0;
 	}
 }
+//probar nodos 9 13 10
 int aprobados(Nodo *arbol){
 	if (arbol == NULL){
 		return 0;
@@ -228,9 +238,10 @@ int aprobados(Nodo *arbol){
 	else{
 		int n1 = arbol->nota1;
 		int n2 = arbol->nota2;
-		return aprobado(n1,n2)+ aprobados(arbol->der);
+		return aprobado(n1,n2)+ aprobados(arbol->der) + aprobados(arbol->izq);
 	}
 }
+
 void menu(){
 	int codigo, opcion, contador = 0;
 	string nombre[] = {"JUAN", "LUIS", "MILENA", "PABLO", "PEPE", "ALBERTO"},nom;
@@ -239,7 +250,8 @@ void menu(){
 
 	do{
 		cout << "\n ************************\n";
-		cout << "| 1. Agregar Estudiantes |\n";
+		cout << "| 0. Agregar Estudiante  |\n";
+		cout << "| 1. Agregar Lista       |\n";
 		cout << "| 2. Mostrar Nodos       |\n";
 		cout << "| 3. Buscar Nodo         |\n";
 		cout << "| 4. Mostrar Estudiantes |\n";
@@ -247,7 +259,6 @@ void menu(){
 		cout << "| 6. Nro de Aprobados y  |\n";
 		cout << "|    Desaprobados        |\n";
 		cout << "| 7. Promedio General    |\n";
-		cout << "| 8. Ingresar Estudiante |\n";
 		cout << "| 10. Salir              |\n";
 		cout << " ************************\n";
 		cout << "\nOpcion: ";
@@ -255,61 +266,79 @@ void menu(){
 
 		switch (opcion){
 		case 0:
-			cout << "Ingrese Codigo: ";
-			cout << "Ingrese Nombre: ";
-			cout << "Ingrese Nota 1: ";
-			cout << "Ingrese Nota 2: ";
-			break;
-		case 1:
-			cout << "Se Agregaron Correctamente"<<endl;
-				for (int i = 0; i < 6; i++)
-				{
-					insertarNodo(arbol, i, nombre[i], nota1[i], nota2[i], NULL); // Insertamos automaticamente
-				}
-
-			break;
-		case 2:
-			if (arbol == NULL)
-			{
-				cout << "El arbol esta vacio\n";
+			cout<<"Ingrese Codigo: ";cin>>codigo;
+			if(buscar(arbol,codigo) == true){
+				cout<<"\nEstudiante ya Existe! Intente de Nuevo"<<endl;
+				break;
 			}
-			else
-			{
-				cout << "Mostrando el Arbol\n";
-				mostrarArbol(arbol, contador);
-			}
-			break;
-		case 3:
-			cout << "Ingrese Codigo: ";
-			cin >> codigo;
-			mostrar_buscar(arbol, codigo);
-			break;
-		case 4:
-			cout << "Detalle de Estudiantes\n\n";
-			mostrar_estudiantes(arbol, cantidad_estudiantes(arbol),0);
-			break;
-		case 5:
-			cout << "Ingrese codigo del alumno: ";
-			cin >> codigo;
-			cout << promedio_alumno(arbol, codigo) << endl;
-			break;
-		case 6:
-			cout<<"Alumnos Aprobados son: "<<aprobados(arbol)<<endl;
-			cout<<"Alumnos Desaprobados son: "<<cantidad_estudiantes(arbol)-aprobados(arbol)<<endl;
-			break;
-		case 7:	
-			cout << "El Promedio General de la Nota 1 es: "<<suma_nota1(arbol)/(cantidad_estudiantes(arbol));
-			cout << "\nEl Promedio General de la Nota 2 es: "<<suma_nota2(arbol)/(cantidad_estudiantes(arbol));
-			cout << "\nEl Promedio General de la Clase es: "<<(suma_nota1(arbol)+suma_nota2(arbol))/(cantidad_estudiantes(arbol)*2)<<endl;
-			break;
-		case 8: 
-			cout<<" Ingrese Codigo: ";cin>>codigo;
 			cout<<"Ingrese Nombre: ";cin>>nom;
 			cout<<"Ingrese Nota 1: ";cin>>not1;
 			cout<<"Ingrese Nota 2: ";cin>>not2;
 			insertarNodo(arbol, codigo, nom, not1, not2, NULL);
 			break;
-		case 9: 
+		case 1:
+				for (int i = 0; i < 6; i++){
+					insertarNodo(arbol, i, nombre[i], nota1[i], nota2[i], NULL);
+				}
+			cout << "Se Agregaron Correctamente"<<endl;
+			break;
+		case 2:
+			if (arbol == NULL){
+				cout << "No hay Estudiantes\n";
+			break;
+			}
+				cout << "Mostrando el Arbol\n";
+				mostrarArbol(arbol, contador);
+			break;
+		case 3:
+			if(arbol == NULL){
+				cout<<"No hay estudiantes Registrados\n";
+				break;
+			}
+			cout << "Ingrese Codigo: ";
+			cin >> codigo;
+			mostrar_buscar(arbol, codigo);
+			break;
+		case 4:
+			if(arbol == NULL){
+				cout<<"No hay estudiantes Registrados\n";
+				break;
+			}
+			cout << "Detalle de Estudiantes\n\n";
+			mostrar_estudiantes(arbol, cantidad_estudiantes(arbol));
+			cout<<"Total "<<cantidad_estudiantes(arbol)<<" Estudiantes"<<endl;
+			break;
+		case 5:
+			if(arbol == NULL){
+				cout<<"No hay estudiantes Registrados\n";
+				break;
+			}
+			cout << "Ingrese codigo del alumno: ";
+			cin >> codigo;
+			if(buscar(arbol,codigo) != true){
+				cout<<"\nEl Estudiante no Existe! Intente de Nuevo"<<endl;
+				break;
+			}
+			cout << promedio_alumno(arbol, codigo) << endl;
+			break;
+		case 6:
+			if(arbol == NULL){
+				cout<<"No hay estudiantes Registrados\n";
+				break;
+			}
+			cout<<"Alumnos Aprobados son: "<<aprobados(arbol)<<endl;
+			cout<<"Alumnos Desaprobados son: "<<cantidad_estudiantes(arbol)-aprobados(arbol)<<endl;
+			break;
+		case 7:	
+			if(arbol == NULL){
+				cout<<"No hay estudiantes Registrados\n";
+				break;
+			}
+			cout << "El Promedio General de la Nota 1 es: "<<suma_nota1(arbol)/(cantidad_estudiantes(arbol));
+			cout << "\nEl Promedio General de la Nota 2 es: "<<suma_nota2(arbol)/(cantidad_estudiantes(arbol));
+			cout << "\nEl Promedio General de la Clase es: "<<(suma_nota1(arbol)+suma_nota2(arbol))/(cantidad_estudiantes(arbol)*2)<<endl;
+			break;
+		case 8: 
 			cout<<"Ingrese Codigo de Alumno a Eliminar :";cin>>codigo;
 			eliminar(arbol,codigo);
 		}
