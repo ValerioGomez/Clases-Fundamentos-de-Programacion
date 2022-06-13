@@ -341,8 +341,7 @@ void menu()
 			cout << "Ingrese Nota 2: ";
 			break;
 		case 1:
-			cout << "Se Agregaran los Estudiantes" << endl
-				 << "Desea Continuar? Y/N :\n";
+			cout << "Se Agregaran los Estudiantes"<< endl<< "Desea Continuar? Y/N :\n";
 			cin >> sino;
 			if (sino == 'Y' || sino == 'y')
 			{
