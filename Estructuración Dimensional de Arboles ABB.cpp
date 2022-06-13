@@ -1,59 +1,9 @@
-/*
-Jóvenes Buenos días para el día de hoy se desarrollara una práctica, la práctica se subirá en el trabajo asignado para este fin,
-con la debida descripción para la siguiente clase el día Lunes de las 9:00 am a 11am y se revisará la sub siguiente clase síncrona,
-en esta práctica se deberá:
-
-Modificar el código defini10do de los Árboles ABB de manera que en la estructura Nodo el dato sea reemplazado por el primer campo de
-la tabla y además contemple los otros campos indicados para cada caso.
-
-struct Nodo{
-	int dato;//primer campo de búsqueda reemplazarlo por el primero de las tablas
-	//...
-	//campos con nuevos datos de las tablas
-	//….
-	Nodo *der;
-	Nodo *izq;
-	Nodo *padre;
-	};
-struct Nodo{
-	int codigo;
-	string nombre;
-	int nota1;
-	int nota2;
-	Nodo *der;
-	Nodo *izq;
-	Nodo *padre;
-};
-
-A. La modificación permitirá también desarrollar todas las operaciones del árbol que trabajan hasta ahora, con las salvedades
-siguientes (Todos los estudiantes desarrollaran estas funciones):
-
-1. Cuando se haga la búsqueda del nodo se muestre los otros campos además del primer campo básico. | void mostrar();
-2. Ingrese los datos de las tablas que se le indican se ingresen automáticamente. | void ingresar_todos_datos_automaticamente();
-3. Además, cuando se ingresen otros datos con la función respectiva no solo se ingrese el primer campo básico sino los otros datos más.
-4. Cuando se muestre el árbol con la función regular puede hacerlo solo en base al primer campo;
-Cree otra función además de ola anterior donde se muestre el árbol, pero con todos los datos de la estructura.
-
-Código = {0,1,2,3,4,5}
-Nombre = {JUAN,LUIS,MILENA,PABLO,PEPE,ALBERTO}
-Nota 1 = {11,15,20,12,5,12}
-Nota 2 = {11.5,12.65,16,17,08,17.5}
-
-Incluir opciones en el menú que calculen:
-
-1. Sumar las notas 1 y 2 en forma individual y determine el promedio de la nota 1 y 2.
-2. Sacar el promedio individual y mostrarlo.
-3. Cuantos aprobados hay y cuantos desaprobados según el promedio individual.
-3. Calcule el promedio de todas las notas (incluye la Nota 1 y la Nota 2) en forma global de toda la clase.
- */
 #include <iostream>
-#include <stdlib.h>
 #include <string>
 
 using namespace std;
 
-struct Nodo
-{
+struct Nodo{
 	int codigo;
 	string nombre;
 	float nota1;
@@ -65,8 +15,7 @@ struct Nodo
 
 Nodo *arbol = NULL;
 
-Nodo *crearNodo(int c, string n, float n1, float n2, Nodo *padre)
-{
+Nodo *crearNodo(int c, string n, float n1, float n2, Nodo *padre){
 	Nodo *nuevo_nodo = new Nodo();
 	nuevo_nodo->codigo = c;
 	nuevo_nodo->nombre = n;
@@ -78,48 +27,24 @@ Nodo *crearNodo(int c, string n, float n1, float n2, Nodo *padre)
 
 	return nuevo_nodo;
 }
-// Funcion para insertar elementos en el arbol
-void insertarNodo(Nodo *&arbol, int c, string n, float n1, float n2, Nodo *padre)
-{
-	if (arbol == NULL)
-	{
+void insertarNodo(Nodo *&arbol, int c, string n, float n1, float n2, Nodo *padre){
+	if (arbol == NULL){
 		Nodo *nuevo_nodo = crearNodo(c, n, n1, n2, padre);
 		arbol = nuevo_nodo;
-	}
-	else
-	{								   // sino el arbol tiene 1 o mas de un nodos
-		int valorRaiz = arbol->codigo; // se obtiene el valor de la raiz
-		if (c < valorRaiz)
-		{ // Si el elemento es menor a la raiz se inserta en la izquierda
+	}else{
+		int valorRaiz = arbol->codigo; 
+		if(c < valorRaiz){
 			insertarNodo(arbol->izq, c, n, n1, n2, arbol);
-		}
-		else
-		{ ////Si el elemento es mayor a la raiz se inserta en la derecha
+		}else{ ////Si el elemento es mayor a la raiz se inserta en la derecha
 			insertarNodo(arbol->der, c, n, n1, n2, arbol);
 		}
-	}
-}
-void mostrar_regular(Nodo *arbol, int n)
-{
-	if (arbol == NULL)
-	{
-		return;
-	}
-	else if (arbol->codigo == n)
-	{
-		mostrar_regular(arbol->der, n);
-		cout << arbol->codigo << endl;
-		cout << arbol->nombre << endl;
-		cout << arbol->nota1 << endl;
-		cout << arbol->nota2 << endl;
 	}
 }
 // Funcion para mostrar nodos
 void mostrarArbol(Nodo *arbol, int contador){
 	if (arbol == NULL){
 		return;
-	}
-	else{
+	}else{
 		mostrarArbol(arbol->der, contador + 1);
 		for (int i = 0; i < contador; i++){
 			cout << "         ";
@@ -129,142 +54,138 @@ void mostrarArbol(Nodo *arbol, int contador){
 	}
 }
 // Buscar en base a un elemento
-void mostrar_buscar(Nodo *arbol, int n)
-{
-	if (arbol == NULL)
-	{
+void mostrar_buscar(Nodo *arbol, int n){
+	if (arbol == NULL){
 		cout << ".-NO se encontro al Alumno-." << endl;
 		return;
 	}
-	else if (arbol->codigo == n)
-	{
+	else if (arbol->codigo == n){
 		cout << " Alumno Encontrado" << endl;
 		cout << "  -Codigo: " << arbol->codigo << endl;
 		cout << "  -Nombre: " << arbol->nombre << endl;
 		cout << "  -Nota 1: " << arbol->nota1 << endl;
 		cout << "  -Nota 2: " << arbol->nota2 << endl;
 		return;
-	}
-	else if (n < arbol->codigo)
-	{
+	}else if (n < arbol->codigo){
 		mostrar_buscar(arbol->izq, n);
-	}
-	else
-	{
+	}else{
 		mostrar_buscar(arbol->der, n);
 	}
 }
 
-// Mostrar Todos los estudiantes
-void mostrar_estudiantes(Nodo *arbol, int n)
-{
-	if (arbol == NULL)
-	{
+void mostrar_estudiantes(Nodo *arbol, int n,int i){
+	if (arbol == NULL){
 		return;
-	}
-	else
-	{
-		cout << arbol->codigo + 1 << "º Estudiante"<< ":" << endl;
+	}else {
+		cout <<i+1<< "º Estudiante"<< ":" << endl;
 		cout << "  -Codigo: " << arbol->codigo << endl;
 		cout << "  -Nombre: " << arbol->nombre << endl;
 		cout << "  -Nota 1: " << arbol->nota1 << endl;
 		cout << "  -Nota 2: " << arbol->nota2 << endl<< endl;
-		mostrar_estudiantes(arbol->der, n);
+		mostrar_estudiantes(arbol->der, n,i+1);
+		mostrar_estudiantes(arbol->izq,n,i+1);
 	}
 }
-float promedio_alumno(Nodo *arbol, int codi)
-{
-	if (arbol == NULL)
-	{
+float promedio_alumno(Nodo *arbol, int codi){
+	if (arbol == NULL){
 		return 0;
-	}
-	else if (arbol->codigo == codi)
-	{
+	}else if (arbol->codigo == codi){
 		float n1 = arbol->nota1;
 		float n2 = arbol->nota2;
 		float promedio = (n1 + n2) / 2;
-		cout << "\nEl estudiante " << arbol->nombre << " Tiene Como Promedio: ";
+		cout << "El estudiante " << arbol->nombre << " Tiene Como Promedio: ";
 		return promedio;
-	}
-	else if (codi < arbol->codigo)
-	{
+	}else if (codi < arbol->codigo){
 		return promedio_alumno(arbol->izq, codi);
-	}
-	else
-	{
+	}else{
 		return promedio_alumno(arbol->der, codi);
 	}
 }
-// determinar el nodo mas izquierdo posible
-Nodo *minimo(Nodo *arbol)
-{
-	if (arbol == NULL)
-	{
+/* float suma_total(Nodo *arbol){
+	if (arbol == NULL){
+		return 0;
+	}
+	else{
+		float subarbolizq = suma_total(arbol->izq); 
+		float subarbolder = suma_total(arbol->der);
+		float nota1 = arbol->nota1;
+		float nota2 = arbol->nota2;
+		return  nota1 + nota2 + subarbolizq + subarbolder;
+	}
+} */
+
+float suma_nota1(Nodo *arbol){
+	if (arbol == NULL){
+		return 0;
+	}
+	else{
+		float subarbolizq = suma_nota1(arbol->izq); 
+		float subarbolder = suma_nota1(arbol->der);
+		return  arbol->nota1 + subarbolizq + subarbolder;
+	}
+}
+float suma_nota2(Nodo *arbol){
+	if (arbol == NULL){
+		return 0;
+	}
+	else{
+		float subarbolizq = suma_nota2(arbol->izq); 
+		float subarbolder = suma_nota2(arbol->der);
+		return  arbol->nota2 + subarbolizq + subarbolder;
+	}
+}
+Nodo *minimo(Nodo *arbol){
+	if (arbol == NULL){
 		return NULL;
 	}
-	if (arbol->izq)
-	{
-		// buscamos el hijo mas izquierdo del arbol
+	if (arbol->izq){
 		return minimo(arbol->izq);
 	}
-	else
-	{
-		// retornamos el mismo nodo
+	else{
 		return arbol;
 	}
 }
 // Reemplazar un nodos por le otro un solo hijo
-void reemplazar(Nodo *arbol, Nodo *nuevoNodo)
-{
+void reemplazar(Nodo *arbol, Nodo *nuevoNodo){
 	// si tiene padre
-	if (arbol->padre)
-	{
+	if (arbol->padre){
 		// arbolpadre asgnamos su nuevo hijo
-		if (arbol->codigo == arbol->padre->izq->codigo)
-		{
+		if (arbol->codigo == arbol->padre->izq->codigo){
 			arbol->padre->izq = nuevoNodo;
 		}
 		// le asignamos al nodo su nuevo padre
-		else if (arbol->codigo == arbol->padre->der->codigo)
-		{
+		else if (arbol->codigo == arbol->padre->der->codigo){
 			arbol->padre->der = nuevoNodo;
 		}
 	}
-	if (nuevoNodo)
-	{
+	if (nuevoNodo){
 		// Le aseignamos su nueov padre
 		nuevoNodo->padre = arbol->padre;
 	}
 }
 // Destruir un nodo
-void destruirNodo(Nodo *nodo)
-{
+void destruirNodo(Nodo *nodo){
 	nodo->izq = NULL;
 	nodo->der = NULL;
 	delete nodo;
 }
 // eliminar un nodo encontrado
-void eliminarNodo(Nodo *nodoEliminar)
-{
+void eliminarNodo(Nodo *nodoEliminar){
 	// si el nodo tiene ambos hijos
-	if (nodoEliminar->izq && nodoEliminar->der)
-	{
+	if (nodoEliminar->izq && nodoEliminar->der){
 		Nodo *menor = minimo(nodoEliminar->der);
 		nodoEliminar->codigo = menor->codigo;
 		eliminarNodo(menor); // si el nodo tiene Dos hijos
 	}
-	else if (nodoEliminar->izq)
-	{ // si el nodo tiene un solo hijoizquiedo
+	else if (nodoEliminar->izq){ // si el nodo tiene un solo hijoizquiedo
 		reemplazar(nodoEliminar, nodoEliminar->izq);
 		destruirNodo(nodoEliminar);
 	}
-	else if (nodoEliminar->der)
-	{ // si el nodo tiene un solo hijo derrecho
+	else if (nodoEliminar->der){ // si el nodo tiene un solo hijo derrecho
 		reemplazar(nodoEliminar, nodoEliminar->der);
 		destruirNodo(nodoEliminar);
 	}
-	else
-	{ // si el nodo es una hoja
+	else{ // si el nodo es una hoja
 		reemplazar(nodoEliminar, NULL);
 		destruirNodo(nodoEliminar);
 	}
@@ -284,41 +205,40 @@ void eliminar(Nodo *arbol, int n){
 		eliminarNodo(arbol);
 	}
 }
-int contar_nodos(Nodo *arbol){
+int cantidad_estudiantes(Nodo *arbol){
 	if (arbol == NULL){
 		return 0;
 	}else{
-		return 1 + contar_nodos(arbol->izq) + contar_nodos(arbol->der);
+		return 1 + cantidad_estudiantes(arbol->izq) + cantidad_estudiantes(arbol->der);
 	}
 }
-void menu2()
-{
-	int opcion;
-	float promedio, promedio_general;
-	do
-	{
-		cout << "	 *********************\n";
-		cout << "	| 1.Buscar por Codigo |\n";
-		cout << "	| 2.Buscar por Nombre |\n";
-		cout << "	| 3.Salir             |\n";
-		cout << "	 *********************\n";
-		cout << "\nOpcion: ";
-	} while (opcion != 3);
+
+float aprobado(float n,float m){
+	float prom = (n+m)/2;
+	if(prom >10){
+		return 1;
+	}else{
+		return 0;
+	}
 }
-
-void menu()
-{
-	int codigo, opcion, opcion2, contador = 0;
-	float promedio, promedio_general;
-	char sino;
-
-	string nombre[] = {"JUAN", "LUIS", "MILENA", "PABLO", "PEPE", "ALBERTO"};
-	float nota1[] = {11, 15, 20, 12, 5, 12};
+int aprobados(Nodo *arbol){
+	if (arbol == NULL){
+		return 0;
+	}
+	else{
+		int n1 = arbol->nota1;
+		int n2 = arbol->nota2;
+		return aprobado(n1,n2)+ aprobados(arbol->der);
+	}
+}
+void menu(){
+	int codigo, opcion, contador = 0;
+	string nombre[] = {"JUAN", "LUIS", "MILENA", "PABLO", "PEPE", "ALBERTO"},nom;
+	float nota1[] = {11, 15, 20, 12, 5, 12},not1,not2;
 	float nota2[] = {11.5, 12.65, 16, 17, 8, 17.5};
 
-	do
-	{
-		cout << " ************************\n";
+	do{
+		cout << "\n ************************\n";
 		cout << "| 1. Agregar Estudiantes |\n";
 		cout << "| 2. Mostrar Nodos       |\n";
 		cout << "| 3. Buscar Nodo         |\n";
@@ -327,13 +247,13 @@ void menu()
 		cout << "| 6. Nro de Aprobados y  |\n";
 		cout << "|    Desaprobados        |\n";
 		cout << "| 7. Promedio General    |\n";
+		cout << "| 8. Ingresar Estudiante |\n";
 		cout << "| 10. Salir              |\n";
 		cout << " ************************\n";
 		cout << "\nOpcion: ";
 		cin >> opcion;
 
-		switch (opcion)
-		{
+		switch (opcion){
 		case 0:
 			cout << "Ingrese Codigo: ";
 			cout << "Ingrese Nombre: ";
@@ -341,16 +261,12 @@ void menu()
 			cout << "Ingrese Nota 2: ";
 			break;
 		case 1:
-			cout << "Se Agregaran los Estudiantes"<< endl<< "Desea Continuar? Y/N :\n";
-			cin >> sino;
-			if (sino == 'Y' || sino == 'y')
-			{
+			cout << "Se Agregaron Correctamente"<<endl;
 				for (int i = 0; i < 6; i++)
 				{
 					insertarNodo(arbol, i, nombre[i], nota1[i], nota2[i], NULL); // Insertamos automaticamente
 				}
-				cout << "Add Successfully!\n";
-			}
+
 			break;
 		case 2:
 			if (arbol == NULL)
@@ -364,30 +280,13 @@ void menu()
 			}
 			break;
 		case 3:
-			do
-			{
-				cout << "	 *********************\n";
-				cout << "	| 1.Buscar por Codigo |\n";
-				cout << "	| 2.Buscar por Nombre |\n";
-				cout << "	| 3.Salir             |\n";
-				cout << "	 *********************\n";
-				cout << "\nOpcion: ";
-				cin >> opcion2;
-				switch (opcion2)
-				{
-				case 1:
-					cout << "Buscar Codigo: ";
-					cin >> codigo;
-					mostrar_buscar(arbol, codigo);
-					break;
-				case 2:
-					break;
-				}
-			} while (opcion != 3);
+			cout << "Ingrese Codigo: ";
+			cin >> codigo;
+			mostrar_buscar(arbol, codigo);
 			break;
 		case 4:
 			cout << "Detalle de Estudiantes\n\n";
-			mostrar_estudiantes(arbol, contar_nodos(arbol) - 1);
+			mostrar_estudiantes(arbol, cantidad_estudiantes(arbol),0);
 			break;
 		case 5:
 			cout << "Ingrese codigo del alumno: ";
@@ -395,13 +294,29 @@ void menu()
 			cout << promedio_alumno(arbol, codigo) << endl;
 			break;
 		case 6:
-			cout << "El Promedio General del Aula es: ";
+			cout<<"Alumnos Aprobados son: "<<aprobados(arbol)<<endl;
+			cout<<"Alumnos Desaprobados son: "<<cantidad_estudiantes(arbol)-aprobados(arbol)<<endl;
+			break;
+		case 7:	
+			cout << "El Promedio General de la Nota 1 es: "<<suma_nota1(arbol)/(cantidad_estudiantes(arbol));
+			cout << "\nEl Promedio General de la Nota 2 es: "<<suma_nota2(arbol)/(cantidad_estudiantes(arbol));
+			cout << "\nEl Promedio General de la Clase es: "<<(suma_nota1(arbol)+suma_nota2(arbol))/(cantidad_estudiantes(arbol)*2)<<endl;
+			break;
+		case 8: 
+			cout<<" Ingrese Codigo: ";cin>>codigo;
+			cout<<"Ingrese Nombre: ";cin>>nom;
+			cout<<"Ingrese Nota 1: ";cin>>not1;
+			cout<<"Ingrese Nota 2: ";cin>>not2;
+			insertarNodo(arbol, codigo, nom, not1, not2, NULL);
+			break;
+		case 9: 
+			cout<<"Ingrese Codigo de Alumno a Eliminar :";cin>>codigo;
+			eliminar(arbol,codigo);
 		}
 	} while (opcion != 10);
 }
 
-int main()
-{
+int main(){
 	menu();
 
 	return 0;
