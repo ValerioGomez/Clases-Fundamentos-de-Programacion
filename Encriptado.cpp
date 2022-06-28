@@ -12,8 +12,10 @@ int main(){
     string abc = "abcdefghijklmnopqrstuvwxyz";//Declaramos el alfabeto
     string palabra;//Declaramos la palabra a encriptar
     int cifra;//Declaramos la cifra a recorrer
+    
     cout<<"\nIngrese Palabra:";getline(cin, palabra);
     cout<<"Ingrese Numero de cifrado: ";cin>>cifra;
+
     int longitud = palabra.length();//tamaño de la palabra
     for(int i=0;i<longitud;i++){//Iteramos la cantidad de letras de a palabra 
         for(int k=0;k<26;k++){//Iteramos cada letra del alfabeto y cada letra de la palabra 
